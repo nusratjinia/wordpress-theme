@@ -1,0 +1,102 @@
+                                                     WORDPRESS
+
+WordPress is a free and open source blogging tool and a content management system (CMS) based on PHP and  MYSQL. Features include a plugin architecture and a template system. WordPress was used by more than 23.2% of the top 10 million websites as of August 2013. WordPress is the most popular blogging system in use on the  Web , at more than 60 million websites.
+Wordpress Installation , Configuration , Theme Selection:
+Before installation of wordpress we need LAMP environment.
+LAMP:
+L=Linux
+A=Apache web server
+M=MYSQL Database
+P=PHP stack
+                             Downloading Wordpress
+
+We can download Wordpress straight from their website:
+
+1. wget http://wordpress.org/latest.tar.gz     (from url)
+After downloading wordpress we need to open terminal (Ctrl Alt T) and run the below command to unzip the downloaded folder.
+2. tar -xzvf latest.tar.gz
+
+               Creating  WordPress Database and User
+
+After we unzip the wordpress files, there will be in a directory called wordpress in the home directory.
+Now we need to create a new MySQL directory for wordpress.
+Run the command on terminal.
+
+3. mysql -u root -p
+After calling database we need to create a new database by name wordpress and a new user with password. we should run commands on terminal:
+4. CREATE DATABASE wordpress;                            (for database)
+5 . CREATE USER wordpressuser@localhost;                    (for new user)
+6. SET PASSWORD FOR wordpressuser@localhost= PASSWORD("password");   (for password)
+
+
+Finish up by granting all privileges to the new user. Without this command, the wordpress installer will not be able to start up:
+
+After creating database,database user  we need granting all privileges for the new user. For this we need to run this command:
+
+7. GRANT ALL PRIVILEGES ON wordpress.* TO wordpressuser@localhost IDENTIFIED BY 'password';
+
+Then refresh MySQL:
+8. FLUSH PRIVILEGES;
+Exit out of the MySQL shell:
+9. exit
+                          WordPress Configuration
+
+The first step to is to copy the sample wordpress configuration file, located in the wordpress directory, into a new file which we will edit, creating a new usable wordpress config:
+10. cp ~/wordpress/wp-config-sample.php ~/wordpress/wp-config.php
+Then open the wordpress config:
+11. sudo nano ~/wordpress/wp-config.php
+Find the section that contains the field below and substitute in the correct name for your database, username, and password: (database name,username and password that we created for wordpress)
+MySQL settings - You can get this info from your web host
+The name of the database for WordPress
+define('DB_NAME', 'wordpress');
+
+
+MySQL database username
+define('DB_USER', 'wordpressuser');
+
+MySQL database password
+define('DB_PASSWORD', 'password');
+                           Copy the Files
+We uploaded wordpress on virtual private server. WE need to move unzipped wordpress
+files to the website's root directory.
+12. sudo rsync -avP ~/wordpress/ /var/www/
+Finally we need to set the permissions on the installation.
+13. cd /var/www/
+
+For ownership of the directory to the apache user.
+14. sudo chown username:www-data /var/www -R
+15. sudo chmod g+w /var/www -R
+However, the form does require a specific php module to run. If it is not yet installed on your server, download php-gd:
+sudo apt-get install php5-gd
+
+Until this we have done our terminal work. Now we will finalize our wordpress configuration by filling some informations and by log in.
+
+          Complete Installation through the Web Interface
+Now we will see our wordpress on
+
+http://server_domain_name_or_IP
+
+
+
+
+You will see the WordPress initial configuration page, where you will create an initial administrator account:
+
+
+After  filling the informations we need to click install wordpress button:
+
+
+WordPress will confirm the installation, and then ask you to log in with the account you just created:
+
+Then log in :
+
+After log in:
+We will see the WordPress interface:
+
+
+For Theme Installation
+1.Dashboard page.
+2.Appearance > Select themes > add new > Install.
+3.The downloaded theme will be at wordpress theme folder.
+
+NOTE: If you face error password problem when log in then use MD5 Hash Generator
+and generate an  Hash   and use it as your password.
